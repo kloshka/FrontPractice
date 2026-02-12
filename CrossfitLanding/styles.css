@@ -236,6 +236,7 @@ a:hover {
     justify-content: space-between;
     align-items: center;
     column-gap: 20px; /*чтобы при сильном сжатии экрана элементы не сжимались*/
+    padding-inline: 32px;
 }
 
 .header__logo{
@@ -244,7 +245,7 @@ a:hover {
 
 .header__menu-list {
     display: flex;
-    column-gap: 62px;
+    column-gap: 50px;
 }
 
 .header__menu-link {
@@ -297,3 +298,47 @@ a:hover {
     height: 1px;
     box-shadow: 15px 0 0 currentColor;
 }
+
+@media (max-width: 1024px) {
+  .header {
+    flex-wrap: wrap;
+    padding-top: 20px;
+    row-gap: 10px;
+    padding-inline: 15px;
+  }
+  .header__menu {
+    order: 1;
+    flex-basis: 100vw;
+    display: flex;
+    justify-content: center;
+  }
+  .header__menu-list {
+    flex-wrap: wrap;
+  }
+  .header__menu-link {
+    height: 50px;
+  }
+}
+
+@media (max-width: 767px) {
+
+  .header{
+    padding-top: 10px;
+  }
+  .header__menu-link {
+    height: 32px;
+  }
+  .header__menu-list {
+    column-gap: 24px;
+  }
+
+  .header__actions {
+    column-gap: 15px;
+  }
+
+  .button {
+    padding-inline: 18px;
+  }
+}
+
+/* минимальный размер экрана на который, мы должны ориентироваться 360px
