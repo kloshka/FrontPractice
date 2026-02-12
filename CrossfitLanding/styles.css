@@ -148,6 +148,7 @@ body {
 :root {
     /*цвета*/
     --color-dark: #000000;
+    --color-dark-alternate: #131619;
     --color-light: #ffffff;
     --color-dark-gray: #404040;
     --color-light-gray: #c4c4c4;
@@ -168,7 +169,8 @@ body {
     /*ширина контейнера огранич контент*/
     --containter-width: 1300px;
     --conteinre-padding-x: 15px;
-
+    
+    --header-hight: 90px;
 
     --transition-duration: 0.2s; 
 }
@@ -236,7 +238,10 @@ a:hover {
     justify-content: space-between;
     align-items: center;
     column-gap: 20px; /*чтобы при сильном сжатии экрана элементы не сжимались*/
-}
+    padding-inline: 32px;
+    background-color: var(--color-dark-alternate);
+    min-height: 90px;
+  }
 
 .header__logo{
     flex-shrink: 0; /*по умолчанию стоит 1 и элементы сжимаются при нехватке места*/
@@ -244,14 +249,14 @@ a:hover {
 
 .header__menu-list {
     display: flex;
-    column-gap: 62px;
+    column-gap: 50px;
 }
 
 .header__menu-link {
     display: inline-flex;
     column-gap: 7px;
     align-items: center;
-    height: 90px;
+    height: var(--header-hight);
     text-transform: uppercase;
     text-decoration: none;
     font-weight: 700;
@@ -263,7 +268,7 @@ a:hover {
 .header__menu-link.is-current::after{
     content: '';
     width: 5px;
-    height: 5px;
+    aspect-ratio: 1;
     background-color: currentColor; /*наследует свойство*/ 
     border-radius: 50%;
 }
@@ -284,7 +289,7 @@ a:hover {
     border: var(--border);
     padding-left: 8px;
     color: var(--color-light);
-    border-radius: var(--border-radius);
+    border-radius: 50%;
 }
 
 .header__burger-button:hover{
@@ -297,3 +302,168 @@ a:hover {
     height: 1px;
     box-shadow: 15px 0 0 currentColor;
 }
+
+
+.visually-hidden {
+  position: absolute !important;
+  width: 1px !important;
+  height: 1px !important;
+  margin: -1px !important;
+  border: 0 !important;
+  padding: 0 !important;
+  white-space: nowrap !important;
+  clip-path: inset(100%) !important;
+  clip: rect(0 0 0 0) !important;
+  overflow: hidden !important;
+}
+
+.banner {
+  display: flex;
+  padding: 36px 70px;
+  min-height: calc(100vh - var(--header-hight));
+  flex-direction: column;
+  justify-content: end;
+  color: var(--color-light);
+  background-color: var(--color-dark-alternate);
+  text-transform: uppercase;
+}
+
+.banner-info {
+  display: flex; 
+  /*
+  задали display-flex, т.к по умолчанию псевдоэлементы - строчные
+  но т.к. у banner-info display flex псевдоэлемент становится
+  flex-элементом и на него действуют св-ва размеров
+  Просто задать у псевдоэлемента display: inline-block - не вариант, 
+  т.к будет перенос строки
+  */
+  align-items: end;
+  font-size: clamp(16px, 1.56vw 30px); 
+  line-height: 1.27;
+  font-weight: 700;
+}
+
+.banner-info::before {
+  content: "";
+  flex-shrink: 0;
+  width: clamp(60px, 10.1vw, 194px);
+  aspect-ratio: 1;
+  /*порядок в background важен лишь для пары position и size*/
+  background: url(./icons/bold-arrow-down-right.svg) center/contain no-repeat;
+  margin-right: 30px;
+}
+/* для вычисления размеры во вьюпорт единицах мы смотрим на макет, 
+делим высоту элемента в нем на ширину макета - коэфф - значение в вьюпорт единицах */
+.banner-title {
+  font-size: min(360px, 18.75vw); 
+  line-height: 1;
+}
+
+
+.banner-pagination{
+}
+
+.banner-pagination-list{
+  display: flex;
+  /* column-gap: 14px; */
+  justify-content: center;
+}
+
+.banner-pagination-item{
+  display: flex; 
+  /* пропадает маркер по умолчанию т.к. он отображается лишь при display: list-item */
+}
+
+
+/* 
+т.к кнопки кружочки слишком маленькие и на них тяжело попасть, 
+сделали их через псевдоэлементы, а с помошью padding на основном 
+увеличили область нажатия
+*/
+.banner-pagination-button{
+  padding: 7px; /*column-gap поделили пополам */
+  background-color: transparent;
+  border: none;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+
+}
+
+.banner-pagination-button::after{
+  content: "";
+  display: block;
+  width: 10px;
+  aspect-ratio: 1;
+  border: var(--border);
+  border-radius: 50%;
+  transition: var(--transition-duration);
+}
+.is-current.banner-pagination-button::after{
+  background-color: var(--color-light);
+}
+
+.banner-pagination-button:not(.is-current):hover::after{
+  border-color: var(--color-light-gray);
+}
+
+@media (max-width: 1024px) {
+  .header {
+    flex-wrap: wrap;
+    padding-top: 20px;
+    row-gap: 10px;
+  }
+  .header__menu {
+    order: 1;
+    flex-basis: 100vw;
+    display: flex;
+    justify-content: center;
+  }
+  .header__menu-list {
+    flex-wrap: wrap;
+  }
+  .header__menu-link {
+    height: 50px;
+  }
+  .header,
+  .banner{
+    padding-inline: 15px;
+  }
+
+  .banner {
+    row-gap: 10px;
+  }
+}
+
+@media (max-width: 767px) {
+
+  .header{
+    padding-top: 10px;
+  }
+  .header__menu-link {
+    height: 32px;
+  }
+  .header__menu-list {
+    column-gap: 24px;
+  }
+
+  .header__actions {
+    column-gap: 15px;
+  }
+
+  .button {
+    padding-inline: 18px;
+  }
+
+  .banner-info::before{
+    margin-right: 10px;
+    margin-bottom: 5px;
+  }
+  
+}
+
+/* минимальный размер экрана на который, мы должны ориентироваться 360px
+
+
+
+
