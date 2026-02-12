@@ -1,0 +1,17 @@
+dom/
+grid/
+gridkakietouroki/
+gridpractice/
+js/
+kasha/
+miniflexproject/
+node_modules/
+percentshit/
+pseudoelements/
+testadaptive/
+testflexgrow/
+testinherit/
+eslint.config.js
+jsconfig.json
+package-lock.json
+package.json
