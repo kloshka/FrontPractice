@@ -167,10 +167,10 @@ body {
     --input-height: 54px;
 
     /*ширина контейнера огранич контент*/
-    --containter-width: 1300px;
-    --conteinre-padding-x: 15px;
+    --container-width: 1300px;
+    --container-padding-x: 35px; /* чтобы при уменьшении экрана контент не слипался с краями*/
     
-    --header-hight: 90px;
+    --header-height: 90px;
 
     --transition-duration: 0.2s; 
 }
@@ -182,7 +182,7 @@ body {
     background-color: var(--color-dark); /* основной фон */
     color: var(--color-light-gray); /* основной цвет текста */
     font-size: 16px;
-    font-weight: 300px;
+    font-weight: 300;
     line-height: 1.75;
 }
 
@@ -221,6 +221,40 @@ h1, h2, h3, h4, h5, h6{
     background-color: var(--color-light-gray);
 }
 
+.button.transparent {
+  height: var(--input-height);
+  padding-left: 31px;
+  padding-right: 88px;
+  background-color: transparent;
+  border: 1px solid var(--color-light);
+  text-decoration: none;
+  position: relative
+}
+
+.button.transparent::after {
+  content: "";
+  box-sizing: border-box;
+  display: block;
+  height: 100%;
+  aspect-ratio: 1;
+  background: url('/CrossfitLanding/icons/arrow.svg') center/70% no-repeat;
+  position: absolute; 
+  right: 0;
+  border: 1px solid var(--color-light);
+  border-radius: var(--border-radius)
+}
+
+.button.transparent:hover{
+  background-color: var(--color-light);
+  color: var(--color-dark);
+  border-color: var(--color-dark);
+}
+
+.button.transparent:hover::after {
+  border-color: var(--color-dark);
+  filter: brightness(0);
+}
+
 /*всем элементам, с которыми взаимодействует пользователь задали анимацию*/
 a, button, input {
     transition-duration: var(--transition-duration)
@@ -256,7 +290,7 @@ a:hover {
     display: inline-flex;
     column-gap: 7px;
     align-items: center;
-    height: var(--header-hight);
+    height: var(--header-height);
     text-transform: uppercase;
     text-decoration: none;
     font-weight: 700;
@@ -320,7 +354,7 @@ a:hover {
 .banner {
   display: flex;
   padding: 36px 70px;
-  min-height: calc(100vh - var(--header-hight));
+  min-height: calc(100vh - var(--header-height));
   flex-direction: column;
   justify-content: end;
   color: var(--color-light);
@@ -338,7 +372,7 @@ a:hover {
   т.к будет перенос строки
   */
   align-items: end;
-  font-size: clamp(16px, 1.56vw 30px); 
+  font-size: clamp(16px, 1.56vw, 30px); 
   line-height: 1.27;
   font-weight: 700;
 }
@@ -407,6 +441,118 @@ a:hover {
   border-color: var(--color-light-gray);
 }
 
+
+.motivation-item:nth-child(2n){
+  background: var(--color-dark-alternate);
+}
+
+.motivation-card{
+  display: flex;
+  justify-content: start;
+  align-items: center;
+  column-gap: clamp(30px, 10.42vw, 200px);
+}
+
+.motivation-item:nth-child(2n) .motivation-card-image{
+  order: -1;
+}
+
+.motivation-card-image{
+  margin-block: -60px
+}
+
+.motivation-card-body{
+  padding-left: 35px;
+}
+
+.motivation-card-title:not(:last-child){
+  margin-bottom: 14px;
+}
+
+.title-medium{
+  font-size: clamp(20px, 2.08vw, 40px);
+  color: var(--color-light);
+  font-weight: 700;
+  line-height: 1.3;
+}
+
+/* 
+Обернул текст в span
+.backdrop-title{
+  position: relative;
+}*/
+/* .backdrop-title {
+  position: relative;
+  z-index: 3;
+} 
+.backdrop-title::before{
+  text-shadow: 0px 0px 2px #FFFFFF;
+  position: absolute;
+  z-index: -1;
+  content: attr(data-title);
+  color: var(--color-dark);
+  font-family: Yantramanav;
+  font-size: 2.8em;
+  left: -1.2ch;
+  top: -0.5ch;
+  font-weight: 700;
+  line-height: 112px;
+  text-transform: uppercase;
+}  */
+.backdrop-title{
+  position: relative;
+  z-index: 2;
+}
+
+.backdrop-title::before{
+  content: "";
+  display: block;
+  position: absolute;
+  right: calc(100% + 8px);
+  /* left: -8px; не подходит т.к. смещает только левый край*/
+  width: 26px;
+  aspect-ratio: 1;
+  background: url('/CrossfitLanding/icons/Group.svg') center/contain no-repeat;
+}
+
+
+.backdrop-title::after{
+  position: absolute;
+  z-index: -1;
+  content: attr(data-title);
+  color: transparent;
+  -webkit-text-stroke: 1px var(--color-light-gray);
+  text-stroke: 1px var(--color-light-gray);
+  font-family: var(--font-family-accent);
+  font-size: 2.8em;
+  top: -0.3em;
+  left: -0.6em;
+  line-height: 1;
+  font-weight: 700;
+  text-transform: uppercase;
+} 
+
+
+.motivation-card-description{
+  max-width: 400px;
+}
+.motivation-card-description:not(:last-child){
+  margin-bottom: 37px;
+}
+
+p {
+  margin: 0 /* убрали вертикальные внешние отступы*/
+}
+
+p:not([class]):not(:last-child){
+  margin-bottom: 24px;
+}
+@media (max-width: 1919px) {
+  .motivation-card-image {
+    margin-block: -20px
+  }
+  
+}
 @media (max-width: 1024px) {
   .header {
     flex-wrap: wrap;
@@ -432,6 +578,15 @@ a:hover {
 
   .banner {
     row-gap: 10px;
+  }
+
+  .motivation-card-image {
+    max-width: 30%;
+    height: auto;
+    margin-block: 0;
+  }
+  .motivation-card{
+    padding-block: 50px;
   }
 }
 
@@ -459,11 +614,25 @@ a:hover {
     margin-right: 10px;
     margin-bottom: 5px;
   }
-  
+  .motivation-card{
+    flex-direction: column-reverse;
+  }
+  .motivation-item:nth-child(2n) .motivation-card-image{
+    order: 1
+  }
+  .motivation-card-image {
+    max-width: 60%;
+  }
+  .motivation-card{
+    padding-block: 30px;
+    row-gap: 30px;
+  }
+  .motivation-card-description:not(:last-child){
+    margin-bottom: 20px;
+  }
 }
+
 
 /* минимальный размер экрана на который, мы должны ориентироваться 360px
 
-
-
-
+*/
